@@ -63,6 +63,7 @@ func printTree(w io.Writer,node *treeNode, ch int, nodeName rune)  {
 func main() {
 
 	treeCurrent := &tree{}
+
 	treeCurrent.insertTree(1).
 				insertTree(10).
 				insertTree(11).

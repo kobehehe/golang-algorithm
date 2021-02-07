@@ -1,4 +1,6 @@
-package main
+//实现查找二叉树
+
+package binaryTree
 
 import (
 	"fmt"
@@ -6,89 +8,98 @@ import (
 )
 
 type treeNode struct {
-	val int
-	left *treeNode
-	right *treeNode
+	val   int
+	Left  *treeNode
+	Right *treeNode
 }
 
-type tree struct {
-	root *treeNode
+type Tree struct {
+	Root *treeNode
 }
 
-func (t *tree) insertTree(data int) *tree {
-	if t.root == nil{
-		t.root = &treeNode{val: data}
-	}else{
-		t.root.insertTreeNode(data)
+func (t *Tree) insertTree(data int) *Tree {
+	if t.Root == nil {
+		t.Root = &treeNode{val: data}
+	} else {
+		t.Root.insertTreeNode(data)
 	}
 	return t
 }
 
-func (n *treeNode) insertTreeNode(data int)  {
-	if n == nil{
+func New(node []int) *Tree {
+	lenTree := len(node)
+	if lenTree == 0{
+		return nil
+	}
+	tree := &Tree{}
+
+	for _,v := range node{
+		tree.insertTree(v)
+	}
+	return tree
+}
+
+func (n *treeNode) insertTreeNode(data int) {
+	if n == nil {
 		return
 	}
-	if data < n.val{
-		if n.left == nil{
-			n.left = &treeNode{val: data}
-		}else{
-			n.left.insertTreeNode(data)
+	if data < n.val {
+		if n.Left == nil {
+			n.Left = &treeNode{val: data}
+		} else {
+			n.Left.insertTreeNode(data)
 		}
-	}else{
-		if n.right == nil{
-			n.right = &treeNode{val: data}
-		}else{
-			n.right.insertTreeNode(data)
+	} else {
+		if n.Right == nil {
+			n.Right = &treeNode{val: data}
+		} else {
+			n.Right.insertTreeNode(data)
 		}
 	}
 }
 
-func printTree(w io.Writer,node *treeNode, ch int, nodeName rune)  {
+func PrintTree(w io.Writer, node *treeNode, ch int, nodeName rune) {
 
-	if node == nil{
+	if node == nil {
 		return
 	}
 
-	for i:=0;i<ch;i++{
-		fmt.Fprint(w,"  ")
+	for i := 0; i < ch; i++ {
+		fmt.Fprint(w, "  ")
 	}
-	fmt.Fprintf(w,"%c:%v\n",nodeName,node.val)
+	fmt.Fprintf(w, "%c:%v\n", nodeName, node.val)
 
-	printTree(w,node.left,ch+1,'L')
-	printTree(w,node.right,ch+1,'R')
+	PrintTree(w, node.Left, ch+1, 'L')
+	PrintTree(w, node.Right, ch+1, 'R')
 
 }
-
 
 func main() {
 
-	treeCurrent := &tree{}
+	treeCurrent := &Tree{}
 
 	treeCurrent.insertTree(1).
-				insertTree(10).
-				insertTree(11).
-				insertTree(21).
-				insertTree(31).
-				insertTree(41).
-				insertTree(15).
-				insertTree(16)
+		insertTree(10).
+		insertTree(11).
+		insertTree(21).
+		insertTree(31).
+		insertTree(41).
+		insertTree(15).
+		insertTree(16)
 	//printTree(os.Stdout,treeCurrent.root,0,'M')
-	aa := getTreeHeight(treeCurrent.root)
+	aa := GetTreeHeight(treeCurrent.Root)
 	fmt.Println(aa)
 }
 
-func getTreeHeight(t *treeNode) int{
-	if t == nil{
+func GetTreeHeight(t *treeNode) int {
+	if t == nil {
 		return 0
 	}
-	leftLen := getTreeHeight(t.left)
-	rightLen := getTreeHeight(t.right)
-	if leftLen > rightLen{
-		return leftLen+1
-	}else{
-		return rightLen+1
+	leftLen := GetTreeHeight(t.Left)
+	rightLen := GetTreeHeight(t.Right)
+	if leftLen > rightLen {
+		return leftLen + 1
+	} else {
+		return rightLen + 1
 	}
 }
-
-
-

@@ -22,6 +22,7 @@ func isBalanced(tree *binaryTree.Tree) bool {
 	lenLeft := binaryTree.GetTreeHeight(tree.Root.Left)
 	a := lenRight - lenLeft
 	fmt.Println(lenRight,lenLeft,a)
+	math
 	if WithBranch(a) <= 1 {
 		return true
 	}

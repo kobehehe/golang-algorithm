@@ -7,19 +7,19 @@ import (
 	"io"
 )
 
-type treeNode struct {
-	val   int
-	Left  *treeNode
-	Right *treeNode
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
 type Tree struct {
-	Root *treeNode
+	Root *TreeNode
 }
 
 func (t *Tree) insertTree(data int) *Tree {
 	if t.Root == nil {
-		t.Root = &treeNode{val: data}
+		t.Root = &TreeNode{Val: data}
 	} else {
 		t.Root.insertTreeNode(data)
 	}
@@ -39,26 +39,26 @@ func New(node []int) *Tree {
 	return tree
 }
 
-func (n *treeNode) insertTreeNode(data int) {
+func (n *TreeNode) insertTreeNode(data int) {
 	if n == nil {
 		return
 	}
-	if data < n.val {
+	if data < n.Val {
 		if n.Left == nil {
-			n.Left = &treeNode{val: data}
+			n.Left = &TreeNode{Val: data}
 		} else {
 			n.Left.insertTreeNode(data)
 		}
 	} else {
 		if n.Right == nil {
-			n.Right = &treeNode{val: data}
+			n.Right = &TreeNode{Val: data}
 		} else {
 			n.Right.insertTreeNode(data)
 		}
 	}
 }
 
-func PrintTree(w io.Writer, node *treeNode, ch int, nodeName rune) {
+func PrintTree(w io.Writer, node *TreeNode, ch int, nodeName rune) {
 
 	if node == nil {
 		return
@@ -67,7 +67,7 @@ func PrintTree(w io.Writer, node *treeNode, ch int, nodeName rune) {
 	for i := 0; i < ch; i++ {
 		fmt.Fprint(w, "  ")
 	}
-	fmt.Fprintf(w, "%c:%v\n", nodeName, node.val)
+	fmt.Fprintf(w, "%c:%v\n", nodeName, node.Val)
 
 	PrintTree(w, node.Left, ch+1, 'L')
 	PrintTree(w, node.Right, ch+1, 'R')
@@ -91,7 +91,7 @@ func main() {
 	fmt.Println(aa)
 }
 
-func GetTreeHeight(t *treeNode) int {
+func GetTreeHeight(t *TreeNode) int {
 	if t == nil {
 		return 0
 	}

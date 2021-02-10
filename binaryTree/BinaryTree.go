@@ -39,6 +39,33 @@ func New(node []int) *Tree {
 	return tree
 }
 
+//前序遍历
+func (n *TreeNode) preGet() {
+	if n != nil{
+		fmt.Println(n.Val)
+		n.Left.preGet()
+		n.Right.preGet()
+	}
+}
+//中序遍历
+func (n *TreeNode) middleGet() {
+	if n != nil{
+		n.Left.middleGet()
+		fmt.Println(n.Val)
+		n.Right.middleGet()
+	}
+}
+
+//后序遍历
+func (n *TreeNode) afterGet() {
+	if n != nil{
+		n.Left.afterGet()
+		n.Right.afterGet()
+		fmt.Println(n.Val)
+	}
+}
+
+
 func (n *TreeNode) insertTreeNode(data int) {
 	if n == nil {
 		return

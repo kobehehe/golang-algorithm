@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+
+
 	treeMap := []int{9, 3, 10,15, 7}
 	aa := binaryTree.New(treeMap)
 	bb := isBalanced(aa)
@@ -21,8 +23,6 @@ func isBalanced(tree *binaryTree.Tree) bool {
 	lenRight := binaryTree.GetTreeHeight(tree.Root.Right)
 	lenLeft := binaryTree.GetTreeHeight(tree.Root.Left)
 	a := lenRight - lenLeft
-	fmt.Println(lenRight,lenLeft,a)
-	math
 	if WithBranch(a) <= 1 {
 		return true
 	}

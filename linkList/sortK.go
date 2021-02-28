@@ -46,8 +46,9 @@ func getKthFromEnd2(head *ListNode, k int) *ListNode {
 		return nil
 	}
 	var res []*ListNode
-	for head.Next != nil {
+	for head != nil {
 		res = append (res,head.Next)
+		head = head.Next
 	}
 	l := len(res)
 	if l >= k{

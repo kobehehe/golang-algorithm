@@ -27,23 +27,26 @@ func main() {
 	fmt.Println(res)
 }
 
-func findAllChar(digital string, index int, str string, digMap map[string]string, res *[]string) {
-	if len(digital) == 0 {
+func findAllChar(dig string, index int, str string, digMap map[string]string, res *[]string) {
+	if len(dig) == 0 {
 		return
 	}
-	if index == len(digital) {
+
+	if len(dig) == index {
 		*res = append(*res, str)
 		return
 	}
 
-	chaNum := string(digital[index])
-	chas := digMap[chaNum]
+	chaNum := string(dig[index])
+	if letter, ok := digMap[chaNum]; !ok {
 
-	for _, v := range chas {
-		str += string(v)
-		findAllChar(digital, index+1, str, digMap, res)
-		l1 := strings.Count(str, "") - 1
-		str = str[:l1-1]
+	} else {
+		for _, v := range letter {
+			str += string(v)
+			findAllChar(dig, index+1, str, digMap, res)
+			l := strings.Count(str, "") - 1
+			str = str[:l-1]
+		}
 	}
 
 }

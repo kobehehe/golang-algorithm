@@ -14,30 +14,65 @@ import (
 func main() {
 	target := 11
 	c := []int{3, 5}
-	aa := dfs(target, c)
+
+	aa := getNum(target, c)
 	fmt.Println(aa)
 }
 
-func dfs(target int, c []int) int {
+//动态规划来一波
+
+func getNum(target int, c []int) int {
+	if target < 0 {
+		return -1
+	}
+
 	if target == 0 {
 		return 0
+	}
+
+	dp := make([]int, target+1)
+	for i := 0; i < target+1; i++ {
+		dp[i] = math.MaxInt32
+	}
+	dp[0] = 0
+	for i := 1; i <= target; i++ {
+		for _, coin := range c {
+			if i >= coin && dp[i-coin] != -2 {
+				dp[i] = int(math.Min(float64(dp[i]), float64(dp[i-coin]+1)))
+				//fmt.Println(dp[i])
+			}
+		}
+	}
+	res := dp[target]
+
+	if dp[target] == -2 {
+		res = -1
+	}
+	return res
+}
+
+func dfs(target int, c []int, memo []int) int {
+	if target == 0 {
+		return 0
+	}
+	if memo[target] != -1 {
+		return memo[target]
 	}
 	minCoins := math.MaxInt32
 	for i := 0; i < len(c); i++ {
 		if target-c[i] < 0 {
 			continue
 		}
-		subMincoins := dfs(target-c[i], c)
-		if subMincoins == -1 {
+		subMinCoins := dfs(target-c[i], c, memo)
+		if subMinCoins == -1 {
 			continue
 		}
-		minCoins = int(math.Min(float64(minCoins), float64(subMincoins+1)))
+		minCoins = int(math.Min(float64(minCoins), float64(subMinCoins+1)))
 	}
 	re := minCoins
-
 	if minCoins == math.MaxInt32 {
 		re = -1
 	}
+	memo[target] = re
 	return re
-
 }

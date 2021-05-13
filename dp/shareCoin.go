@@ -12,8 +12,8 @@ import (
 //输出：3
 //解释：11 = 5 + 5 + 1
 func main() {
-	target := 11
-	c := []int{3, 5}
+	target := 9
+	c := []int{2, 5}
 
 	aa := getNum(target, c)
 	fmt.Println(aa)
@@ -25,27 +25,26 @@ func getNum(target int, c []int) int {
 	if target < 0 {
 		return -1
 	}
-
 	if target == 0 {
 		return 0
 	}
 
 	dp := make([]int, target+1)
+
 	for i := 0; i < target+1; i++ {
 		dp[i] = math.MaxInt32
 	}
 	dp[0] = 0
+
 	for i := 1; i <= target; i++ {
 		for _, coin := range c {
-			if i >= coin && dp[i-coin] != -2 {
+			if i >= coin && dp[i-coin] != math.MaxInt32 {
 				dp[i] = int(math.Min(float64(dp[i]), float64(dp[i-coin]+1)))
-				//fmt.Println(dp[i])
 			}
 		}
 	}
 	res := dp[target]
-
-	if dp[target] == -2 {
+	if dp[target] == math.MaxInt32 {
 		res = -1
 	}
 	return res
